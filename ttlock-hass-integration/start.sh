@@ -31,6 +31,10 @@ if $(bashio::config.true "gateway_debug"); then
   echo "Debug gateway"
   export WEBSOCKET_DEBUG=1
 fi
+if $(bashio::config.true "skip_logs_on_update"); then
+  echo "Skip logs on update"
+  export TTLOCK_SKIP_LOGS=1
+fi
 
 cd /app
 npm start

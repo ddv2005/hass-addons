@@ -741,11 +741,17 @@ class Manager extends EventEmitter {
     console.log("lockUpdated", paramsChanged);
     // if lock has new operations read the operations and send updates
     if (paramsChanged.newEvents == true && lock.hasNewEvents()) {
-      if (!lock.isConnected()) {
-        const result = await lock.connect();
-        // TODO: handle failed connection
+      if (process.env.TTLOCK_SKIP_LOGS == "1") {
+        this.emit("lockUnlock", lock);
       }
-      await this._processOperationLog(lock);
+      else
+      {
+        if (!lock.isConnected()) {
+          const result = await lock.connect();
+          // TODO: handle failed connection
+        }
+        await this._processOperationLog(lock);
+      }
     }
     if (paramsChanged.lockedStatus == true) {
       const status = await lock.getLockStatus();

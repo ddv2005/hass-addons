@@ -28,6 +28,7 @@
     "gateway_key": "str?",
     "gateway_user": "str?",
     "gateway_pass": "str?",
+    "skip_logs_on_update": "bool?",
     "ignore_crc": "bool?",
     "debug_communication": "bool?",
     "debug_mqtt": "bool?",
