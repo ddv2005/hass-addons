@@ -745,8 +745,11 @@ class Manager extends EventEmitter {
       if (process.env.TTLOCK_SKIP_LOGS == "1") {
         console.log(">>>>>> Lock is now unlocked from new event <<<<<<");
         this.emit("lockUnlock", lock);
-        console.log(">>>>>> Lock is now locked from new event <<<<<<");
-        this.emit("lockLock", lock);
+        const status = await lock.getLockStatus();
+        if (status == LockedStatus.LOCKED) {
+          console.log(">>>>>> Lock is now locked from new event <<<<<<");
+          this.emit("lockLock", lock);
+        }
       }
       else
       {

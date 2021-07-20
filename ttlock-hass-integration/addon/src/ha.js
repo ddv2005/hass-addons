@@ -132,11 +132,11 @@ class HomeAssistant {
    * Update the readings of a lock in HA
    * @param {import('ttlock-sdk-js').TTLock} lock 
    */
-  async updateLockState(lock) {
+  async updateLockState(lock, ls = LockedStatus.UNKNOWN) {
     if (this.connected) {
       const id = this.getLockId(lock);
       const stateTopic = "ttlock/" + id;
-      const lockedStatus = await lock.getLockStatus();
+      const lockedStatus = (ls == LockedStatus.UNKNOWN) ? await lock.getLockStatus(): ls;
       let statePayload = {
         battery: lock.getBattery(),
         rssi: lock.getRssi(),
@@ -174,7 +174,7 @@ class HomeAssistant {
    * @param {import('ttlock-sdk-js').TTLock} lock 
    */
   async _onLockUnlock(lock) {
-    await this.updateLockState(lock);
+    await this.updateLockState(lock, LockedStatus.UNLOCKED);
   }
 
   /**
@@ -182,7 +182,7 @@ class HomeAssistant {
    * @param {import('ttlock-sdk-js').TTLock} lock 
    */
   async _onLockLock(lock) {
-    await this.updateLockState(lock);
+    await this.updateLockState(lock, LockedStatus.LOCKED);
   }
 
   /**
