@@ -733,6 +733,10 @@ class Manager extends EventEmitter {
     this.emit("lockUnlock", lock);
   }
 
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   /**
    * 
    * @param {import('ttlock-sdk-js').TTLock} lock 
@@ -747,6 +751,7 @@ class Manager extends EventEmitter {
         this.emit("lockUnlock", lock);
         const status = await lock.getLockStatus();
         if (status == LockedStatus.LOCKED) {
+          await this.sleep(2000);
           console.log(">>>>>> Lock is now locked from new event <<<<<<");
           this.emit("lockLock", lock);
         }
