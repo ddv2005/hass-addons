@@ -1,5 +1,6 @@
 # Changelog
 
+## [0.4.14] - 2021-07-19
 ## [0.4.11] - 2021-05-06
 - Bump SDK in attempt at fixing connect limbo
 
