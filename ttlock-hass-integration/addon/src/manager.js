@@ -741,8 +741,12 @@ class Manager extends EventEmitter {
     console.log("lockUpdated", paramsChanged);
     // if lock has new operations read the operations and send updates
     if (paramsChanged.newEvents == true && lock.hasNewEvents()) {
+      console.log("newEvents");
       if (process.env.TTLOCK_SKIP_LOGS == "1") {
+        console.log(">>>>>> Lock is now unlocked from new event <<<<<<");
         this.emit("lockUnlock", lock);
+        console.log(">>>>>> Lock is now locked from new event <<<<<<");
+        this.emit("lockLock", lock);
       }
       else
       {
