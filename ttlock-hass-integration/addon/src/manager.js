@@ -733,7 +733,7 @@ class Manager extends EventEmitter {
     this.emit("lockUnlock", lock);
   }
 
-  function sleep(ms) {
+  sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
